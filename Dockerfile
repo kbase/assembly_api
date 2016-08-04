@@ -8,7 +8,7 @@ RUN \
     cd /kb/module && \
     git clone https://github.com/msneddon/data_api && \
     cd data_api && \
-    git checkout 85846f032d07d7f5fc8757c101403297cd8cf5ca && \
+    git checkout dab1ce56f4d734fbf042a7b2299d0bb0de7c70cc && \
     cd /kb/module && \
     mkdir lib/ && \
     cp -a data_api/lib/doekbase lib/
