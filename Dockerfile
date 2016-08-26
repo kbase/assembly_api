@@ -2,14 +2,11 @@ FROM kbase/kbase:sdkbase.latest
 MAINTAINER KBase Developer
 # -----------------------------------------
 
+RUN pip install --upgrade ndg-httpsclient
 
-RUN \
-    mkdir -p /kb/module && \
+RUN mkdir -p /kb/module && \
     cd /kb/module && \
-    git clone https://github.com/msneddon/data_api && \
-    cd data_api && \
-    git checkout dab1ce56f4d734fbf042a7b2299d0bb0de7c70cc && \
-    cd /kb/module && \
+    git clone https://github.com/kbase/data_api -b 0.4.0-dev && \
     mkdir lib/ && \
     cp -a data_api/lib/doekbase lib/
 
