@@ -2,7 +2,13 @@ FROM kbase/kbase:sdkbase.latest
 MAINTAINER KBase Developer
 # -----------------------------------------
 
+RUN sudo apt-get install python-dev libffi-dev libssl-dev
+RUN pip install cffi --upgrade
+RUN pip install pyopenssl --upgrade
 RUN pip install --upgrade ndg-httpsclient
+RUN pip install pyasn1 --upgrade
+RUN pip install requests --upgrade && \
+    pip install 'requests[security]' --upgrade
 
 RUN mkdir -p /kb/module && \
     cd /kb/module && \
