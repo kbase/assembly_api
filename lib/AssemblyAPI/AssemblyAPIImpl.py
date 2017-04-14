@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 #BEGIN_HEADER
-from biokbase.workspace.client import Workspace as workspaceService
 import doekbase.data_api.sequence.assembly.api
 from doekbase.data_api import cache
 import logging
+
+from AssemblyAPI.AssemblyIndexer import AssemblyIndexer
 #END_HEADER
 
 
@@ -15,16 +17,16 @@ class AssemblyAPI:
     A KBase module: AssemblyAPI
     '''
 
-    ######## WARNING FOR GEVENT USERS #######
+    ######## WARNING FOR GEVENT USERS ####### noqa
     # Since asynchronous IO can lead to methods - even the same method -
     # interrupting each other, you must be *very* careful when using global
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
-    #########################################
-    VERSION = "0.0.1"
-    GIT_URL = ""
-    GIT_COMMIT_HASH = ""
-    
+    ######################################### noqa
+    VERSION = "0.0.2"
+    GIT_URL = "git@github.com:kbase/assembly_api"
+    GIT_COMMIT_HASH = "b747cfa0275d6e4b12332ffc59c24ae070632b69"
+
     #BEGIN_CLASS_HEADER
     workspaceURL = None
     #END_CLASS_HEADER
@@ -68,9 +70,60 @@ class AssemblyAPI:
         else:
             self.logger.info("Not activating REDIS")
 
+
+
+        self.indexer = AssemblyIndexer(config)
+
         #END_CONSTRUCTOR
         pass
-    
+
+
+    def search_contigs(self, ctx, params):
+        """
+        :param params: instance of type "SearchAssemblyOptions" (num_found -
+           optional field which when set informs that there is no need to
+           perform full scan in order to count this value because it was
+           already done before; please don't set this value with 0 or any
+           guessed number if you didn't get right value previously.) ->
+           structure: parameter "ref" of String, parameter "query" of String,
+           parameter "sort_by" of list of type "column_sorting" -> tuple of
+           size 2: parameter "column" of String, parameter "ascending" of
+           type "boolean" (Indicates true or false values, false = 0, true =
+           1 @range [0,1]), parameter "start" of Long, parameter "limit" of
+           Long, parameter "num_found" of Long
+        :returns: instance of type "SearchAssemblyResult" (num_found - number
+           of all items found in query search (with only part of it returned
+           in "bins" list).) -> structure: parameter "query" of String,
+           parameter "start" of Long, parameter "contigs" of list of type
+           "AssemblyData" (contig_id - id of the contig description -
+           description of the contig (description on fasta header rows)
+           length - (bp) length of the contig gc - gc_content of the contig
+           is_circ - 0 or 1 value indicating if the contig is circular.  May
+           be null if unknown N_count - number of 'N' bases in the contig md5
+           - md5 checksum of the sequence) -> structure: parameter
+           "contig_id" of String, parameter "description" of String,
+           parameter "length" of Long, parameter "gc" of Long, parameter
+           "is_circ" of Long, parameter "N_count" of Long, parameter "md5" of
+           String, parameter "num_found" of Long
+        """
+        # ctx is the context object
+        # return variables are: result
+        #BEGIN search_contigs
+        result = self.indexer.search_contigs(ctx["token"],
+                                             params.get("ref", None),
+                                             params.get("query", None),
+                                             params.get("sort_by", None),
+                                             params.get("start", None),
+                                             params.get("limit", None),
+                                             params.get("num_found", None))
+        #END search_contigs
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, dict):
+            raise ValueError('Method search_contigs return value ' +
+                             'result is not type dict as required.')
+        # return the results
+        return [result]
 
     def get_assembly_id(self, ctx, ref):
         """
@@ -328,7 +381,6 @@ class AssemblyAPI:
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
-
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK", 'message': "", 'version': self.VERSION, 

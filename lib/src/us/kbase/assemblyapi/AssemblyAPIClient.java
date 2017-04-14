@@ -53,6 +53,20 @@ public class AssemblyAPIClient {
         caller = new JsonClientCaller(url, user, password);
     }
 
+    /** Constructs a client with a custom URL
+     * and a custom authorization service URL.
+     * @param url the URL of the service.
+     * @param user the user name.
+     * @param password the password for the user name.
+     * @param auth the URL of the authorization server.
+     * @throws UnauthorizedException if the credentials are not valid.
+     * @throws IOException if an IOException occurs when checking the user's
+     * credentials.
+     */
+    public AssemblyAPIClient(URL url, String user, String password, URL auth) throws UnauthorizedException, IOException {
+        caller = new JsonClientCaller(url, user, password, auth);
+    }
+
     /** Get the token this client uses to communicate with the server.
      * @return the authorization token.
      */
@@ -146,6 +160,23 @@ public class AssemblyAPIClient {
 
     public void setServiceVersion(String newValue) {
         this.serviceVersion = newValue;
+    }
+
+    /**
+     * <p>Original spec-file function name: search_contigs</p>
+     * <pre>
+     * </pre>
+     * @param   params   instance of type {@link us.kbase.assemblyapi.SearchAssemblyOptions SearchAssemblyOptions}
+     * @return   parameter "result" of type {@link us.kbase.assemblyapi.SearchAssemblyResult SearchAssemblyResult}
+     * @throws IOException if an IO exception occurs
+     * @throws JsonClientException if a JSON RPC exception occurs
+     */
+    public SearchAssemblyResult searchContigs(SearchAssemblyOptions params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+        List<Object> args = new ArrayList<Object>();
+        args.add(params);
+        TypeReference<List<SearchAssemblyResult>> retType = new TypeReference<List<SearchAssemblyResult>>() {};
+        List<SearchAssemblyResult> res = caller.jsonrpcCall("AssemblyAPI.search_contigs", args, retType, true, false, jsonRpcContext, this.serviceVersion);
+        return res.get(0);
     }
 
     /**
@@ -380,6 +411,13 @@ public class AssemblyAPIClient {
         args.add(contigIdList);
         TypeReference<List<Map<String,AssemblyContig>>> retType = new TypeReference<List<Map<String,AssemblyContig>>>() {};
         List<Map<String,AssemblyContig>> res = caller.jsonrpcCall("AssemblyAPI.get_contigs", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        return res.get(0);
+    }
+
+    public Map<String, Object> status(RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+        List<Object> args = new ArrayList<Object>();
+        TypeReference<List<Map<String, Object>>> retType = new TypeReference<List<Map<String, Object>>>() {};
+        List<Map<String, Object>> res = caller.jsonrpcCall("AssemblyAPI.status", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 }

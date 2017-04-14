@@ -1,0 +1,333 @@
+{
+    "contigs": [
+        {
+            "description": "k41_1 flag=0 multi=10.6142 len=2628",
+            "id": "k41_1",
+            "length": 2628,
+            "md5": "87662ac1478f70d589eb7eeda8e12d70",
+            "name": "k41_1",
+            "sequence": "AGA"
+        },
+        {
+            "id": "k41_3",
+            "sequence": ""
+        },
+        {
+            "description": "k41_4 flag=0 multi=10.0151 len=3490",
+            "id": "k41_4",
+            "length": 3490,
+            "md5": "a3d63f20d14db136b876ee6d27592ade",
+            "name": "k41_4",
+            "sequence": ""
+        },
+        {
+            "description": "k41_5 flag=0 multi=11.0046 len=4595",
+            "id": "k41_5",
+            "length": 4595,
+            "md5": "2e3a9fe95b8e7a1730fcb0d8d3c05328",
+            "name": "k41_5",
+            "sequence": "",
+            "complete": 0
+        },
+        {
+            "description": "k41_6 flag=0 multi=10.0232 len=5264",
+            "id": "k41_6",
+            "length": 5264,
+            "md5": "dabfba24a541f9d07edd6bd54e622a61",
+            "name": "k41_6",
+            "sequence": ""
+        },
+        {
+            "description": "k41_7 flag=0 multi=11.0365 len=5141",
+            "id": "k41_7",
+            "length": 5141,
+            "md5": "9c2d51496349ac9ac5bdf460633874af",
+            "name": "k41_7",
+            "sequence": ""
+        },
+        {
+            "description": "k41_8 flag=0 multi=9.9719 len=2280",
+            "id": "k41_8",
+            "length": 2280,
+            "md5": "b40648879ecf5e280f44c6558d55a479",
+            "name": "k41_8",
+            "sequence": ""
+        },
+        {
+            "description": "k41_9 flag=0 multi=11.0000 len=10748",
+            "id": "k41_9",
+            "length": 10748,
+            "md5": "c10fd0cdf36aebe509327483c81dbaef",
+            "name": "k41_9",
+            "sequence": ""
+        },
+        {
+            "description": "k41_10 flag=0 multi=10.1992 len=4043",
+            "id": "k41_10",
+            "length": 4043,
+            "md5": "de773348890d192bc308f83ccae8e2c9",
+            "name": "k41_10",
+            "sequence": ""
+        },
+        {
+            "description": "k41_11 flag=1 multi=10.6395 len=8407",
+            "id": "k41_11",
+            "length": 8407,
+            "md5": "1b647dcc9a21b67ee462972e45ea4182",
+            "name": "k41_11",
+            "sequence": ""
+        },
+        {
+            "description": "k41_12 flag=0 multi=11.0131 len=14216",
+            "id": "k41_12",
+            "length": 14216,
+            "md5": "400e568a487a5afff13420e9d32f98ae",
+            "name": "k41_12",
+            "sequence": ""
+        },
+        {
+            "description": "k41_13 flag=0 multi=10.0989 len=597",
+            "id": "k41_13",
+            "length": 597,
+            "md5": "5e71f89349c6b81ba0bb12e8fa56a1c5",
+            "name": "k41_13",
+            "sequence": ""
+        },
+        {
+            "description": "k41_14 flag=0 multi=11.0071 len=8392",
+            "id": "k41_14",
+            "length": 8392,
+            "md5": "b2d0a13eb098317283c7b3bde9a90916",
+            "name": "k41_14",
+            "sequence": ""
+        },
+        {
+            "description": "k41_17 flag=0 multi=11.1902 len=5625",
+            "id": "k41_17",
+            "length": 5625,
+            "md5": "69f5c5957d0aeea299d88f5e6310bc2e",
+            "name": "k41_17",
+            "sequence": ""
+        },
+        {
+            "description": "k41_19 flag=0 multi=11.0080 len=18800",
+            "id": "k41_19",
+            "length": 18800,
+            "md5": "cc5f9dd04925a9bf3cfdcf1247d49403",
+            "name": "k41_19",
+            "sequence": ""
+        },
+        {
+            "description": "k41_20 flag=0 multi=10.7199 len=9001",
+            "id": "k41_20",
+            "length": 9001,
+            "md5": "87b6f01f5c55ec9fcb6e173eb2f6082b",
+            "name": "k41_20",
+            "sequence": ""
+        },
+        {
+            "description": "k41_22 flag=1 multi=10.7782 len=16205",
+            "id": "k41_22",
+            "length": 16205,
+            "md5": "b61724db1b3d52d456331c638d4cb3a2",
+            "name": "k41_22",
+            "sequence": ""
+        },
+        {
+            "description": "k41_23 flag=1 multi=11.2675 len=4804",
+            "id": "k41_23",
+            "length": 4804,
+            "md5": "240ecf58c417d40407e170ff61c84a59",
+            "name": "k41_23",
+            "sequence": ""
+        },
+        {
+            "description": "k41_24 flag=1 multi=10.4717 len=11511",
+            "id": "k41_24",
+            "length": 11511,
+            "md5": "4fb789cd35bd9b75ac71f6b316d34ca5",
+            "name": "k41_24",
+            "sequence": ""
+        },
+        {
+            "description": "k41_25 flag=0 multi=10.6721 len=10966",
+            "id": "k41_25",
+            "length": 10966,
+            "md5": "fdb92f9ea3d791526c6b1863ab7a7905",
+            "name": "k41_25",
+            "sequence": ""
+        },
+        {
+            "description": "k41_27 flag=1 multi=10.7824 len=20896",
+            "id": "k41_27",
+            "length": 20896,
+            "md5": "1560159080558c00ff22328c5d667ee9",
+            "name": "k41_27",
+            "sequence": ""
+        },
+        {
+            "description": "k41_29 flag=0 multi=10.9237 len=23244",
+            "id": "k41_29",
+            "length": 23244,
+            "md5": "bd9744cd069f8597b9b17b2e32506874",
+            "name": "k41_29",
+            "sequence": ""
+        },
+        {
+            "description": "k41_31 flag=0 multi=10.8478 len=10147",
+            "id": "k41_31",
+            "length": 10147,
+            "md5": "5690624ecb2a5f5b180d7217bd1ae65e",
+            "name": "k41_31",
+            "sequence": ""
+        },
+        {
+            "description": "k41_32 flag=0 multi=10.9164 len=7551",
+            "id": "k41_32",
+            "length": 7551,
+            "md5": "0b8b855bec283eaa3a02e380e2a1b403",
+            "name": "k41_32",
+            "sequence": ""
+        },
+        {
+            "description": "k41_34 flag=0 multi=10.8952 len=6751",
+            "id": "k41_34",
+            "length": 6751,
+            "md5": "5164bbf42b74a97e676d546e1d999791",
+            "name": "k41_34",
+            "sequence": ""
+        },
+        {
+            "description": "k41_35 flag=0 multi=11.0203 len=9497",
+            "id": "k41_35",
+            "length": 9497,
+            "md5": "3b841ee25f413fd12c61963b60df9973",
+            "name": "k41_35",
+            "sequence": ""
+        },
+        {
+            "description": "k41_36 flag=1 multi=10.4841 len=23780",
+            "id": "k41_36",
+            "length": 23780,
+            "md5": "b3b426200a93911febab49606185956b",
+            "name": "k41_36",
+            "sequence": ""
+        },
+        {
+            "description": "k41_38 flag=1 multi=10.8649 len=14411",
+            "id": "k41_38",
+            "length": 14411,
+            "md5": "ab5afa51c1d77eb3b6935c2e1d8c4154",
+            "name": "k41_38",
+            "sequence": ""
+        },
+        {
+            "description": "k41_40 flag=0 multi=10.0000 len=2381",
+            "id": "k41_40",
+            "length": 2381,
+            "md5": "61e0e0fe28d81ac3ba1d96a993c73a57",
+            "name": "k41_40",
+            "sequence": ""
+        },
+        {
+            "description": "k41_41 flag=0 multi=11.0469 len=5111",
+            "id": "k41_41",
+            "length": 5111,
+            "md5": "2be11d895dc190e83c732ed601b5ee99",
+            "name": "k41_41",
+            "sequence": ""
+        },
+        {
+            "description": "k41_42 flag=0 multi=10.7879 len=20144",
+            "id": "k41_42",
+            "length": 20144,
+            "md5": "5dedbc32212a0d1c1133acffedd24889",
+            "name": "k41_42",
+            "sequence": ""
+        },
+        {
+            "description": "k41_46 flag=0 multi=10.8970 len=9129",
+            "id": "k41_46",
+            "length": 9129,
+            "md5": "645c9a0e66bdab003a8abcc5ac21a8be",
+            "name": "k41_46",
+            "sequence": ""
+        },
+        {
+            "description": "k41_50 flag=1 multi=10.2119 len=5445",
+            "id": "k41_50",
+            "length": 5445,
+            "md5": "7cb3ed17bfb690e02de01c369ebf2f5d",
+            "name": "k41_50",
+            "sequence": ""
+        },
+        {
+            "description": "k41_51 flag=0 multi=10.5515 len=6395",
+            "id": "k41_51",
+            "length": 6395,
+            "md5": "39fb49c374a90bfdc20064e2a81eede1",
+            "name": "k41_51",
+            "sequence": ""
+        },
+        {
+            "description": "k41_52 flag=0 multi=11.0021 len=5269",
+            "id": "k41_52",
+            "length": 5269,
+            "md5": "cfebb7221702cfb290c7ae5448094ad9",
+            "name": "k41_52",
+            "sequence": ""
+        },
+        {
+            "description": "k41_53 flag=0 multi=10.8911 len=11531",
+            "id": "k41_53",
+            "length": 11531,
+            "md5": "33b09c8016b6d3e1ee43ec52649c2450",
+            "name": "k41_53",
+            "sequence": ""
+        },
+        {
+            "description": "k41_56 flag=0 multi=10.0340 len=4606",
+            "id": "k41_56",
+            "length": 4606,
+            "md5": "67075eafa1a96f5f8c6d2bf615406827",
+            "name": "k41_56",
+            "sequence": ""
+        },
+        {
+            "description": "k41_57 flag=0 multi=10.7409 len=25389",
+            "id": "k41_57",
+            "length": 25389,
+            "md5": "858eb40549add7ad5ad952055580af37",
+            "name": "k41_57",
+            "sequence": ""
+        },
+        {
+            "description": "k41_58 flag=0 multi=10.9799 len=8542",
+            "id": "k41_58",
+            "length": 8542,
+            "md5": "e6a00973eed04bb3350dfb5bbc16d1f3",
+            "name": "k41_58",
+            "sequence": ""
+        },
+        {
+            "description": "k41_59 flag=0 multi=10.2786 len=12756",
+            "id": "k41_59",
+            "length": 12756,
+            "md5": "d54660869f4a415d9b6ef88326c42208",
+            "name": "k41_59",
+            "sequence": ""
+        },
+        {
+            "description": "k41_60 flag=1 multi=10.4022 len=16884",
+            "id": "k41_60",
+            "length": 16884,
+            "md5": "f9e29b85a9cf4c2bc25eb72363260285",
+            "name": "k41_60",
+            "sequence": ""
+        }
+    ],
+    "id": "megahit.contigset",
+    "md5": "f9e29b85a9cf4c2bc25eb72363260285",
+    "source": "User assembled contigs from reads in KBase",
+    "source_id": "none"
+}
