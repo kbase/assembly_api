@@ -2,6 +2,9 @@ import unittest
 import os
 import json
 import time
+import shutil
+
+from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 
 from os import environ
 try:
@@ -40,10 +43,44 @@ class AssemblyAPITest(unittest.TestCase):
         cls.wsURL = cls.cfg['workspace-url']
         cls.wsClient = workspaceService(cls.wsURL, token=token)
         cls.serviceImpl = AssemblyAPI(cls.cfg)
+        cls.scratch = cls.cfg['scratch']
+        cls.callback_url = os.environ['SDK_CALLBACK_URL']
 
-        cls.obj_name="7989/489/2"
-        cls.contigs= [u'NZ_ALQT01000016']
-        
+        suffix = int(time.time() * 1000)
+        cls.wsName = "test_kb_maxbin_" + str(suffix)
+        cls.ws_info = cls.wsClient.create_workspace({'workspace': cls.wsName})
+
+        cls.obj_name = "7989/489/2"
+        cls.contigs = [u'NZ_ALQT01000016']
+
+        # create an example Assembly
+        cls.au = AssemblyUtil(cls.callback_url)
+        assembly_filename = 'test.fa'
+        cls.assembly_fasta_file_path = os.path.join(cls.scratch, assembly_filename)
+        shutil.copy(os.path.join("data", assembly_filename), cls.assembly_fasta_file_path)
+
+        assembly_params = {
+            'file': {'path': cls.assembly_fasta_file_path},
+            'workspace_name': cls.wsName,
+            'assembly_name': 'MyAssembly'
+        }
+        cls.assembly_ref_1 = cls.au.save_assembly_from_fasta(assembly_params)
+        print('Assembly1:' + cls.assembly_ref_1)
+
+        # create a test legacy contigset
+        with open('data/contigset1.json') as file:
+            contigset_data = json.load(file)
+        pprint(contigset_data)
+        saveData = {
+            'type': 'KBaseGenomes.ContigSet',
+            'data': contigset_data,
+            'name': 'contigset'
+        }
+        cls.contig_set_info = cls.wsClient.save_objects({'workspace': cls.wsName, 'objects': [saveData]})[0]
+        pprint(cls.contig_set_info)
+        cls.contig_set_ref = str(cls.contig_set_info[6]) + '/' + str(cls.contig_set_info[0]) + '/' + str(cls.contig_set_info[4])
+        print('ContigSet1:' + cls.contig_set_ref)
+
 
     @classmethod
     def tearDownClass(cls):
@@ -68,6 +105,94 @@ class AssemblyAPITest(unittest.TestCase):
 
     def getContext(self):
         return self.__class__.ctx
+
+
+
+    def test_search_legacy_contigset(self):
+        # no query
+        search_params = {'ref': self.contig_set_ref}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 41)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 41)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'k41_1')
+        self.assertEquals(ret['contigs'][0]['gc'], None)
+        self.assertEquals(ret['contigs'][0]['description'], 'k41_1 flag=0 multi=10.6142 len=2628')
+        self.assertEquals(ret['contigs'][1]['contig_id'], 'k41_3')
+
+        search_params = {'ref': self.contig_set_ref, 'sort_by': [['gc', 1]]}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 41)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 41)
+
+    def test_search_assembly(self):
+        # no query
+        search_params = {'ref': self.assembly_ref_1}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 15)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 15)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'NZ_ALQT01000009')
+        self.assertEquals(ret['contigs'][0]['gc'], 0.30286)
+        self.assertEquals(ret['contigs'][0]['description'], 'blah')
+        self.assertEquals(ret['contigs'][1]['contig_id'], 'NZ_ALQT01000008')
+        self.assertEquals(ret['contigs'][2]['contig_id'], 'NZ_ALQT01000014')
+
+        # with query
+        search_params = {'ref': self.assembly_ref_1, 'query': 'ALQT01000015'}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 1)
+        self.assertEquals(ret['query'], 'ALQT01000015')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 1)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'NZ_ALQT01000015')
+        self.assertEquals(ret['contigs'][0]['description'], 'this is a description')
+
+        # with limit
+        search_params = {'ref': self.assembly_ref_1, 'limit': 2}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 15)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 2)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'NZ_ALQT01000009')
+        self.assertEquals(ret['contigs'][1]['contig_id'], 'NZ_ALQT01000008')
+
+        # with limit
+        search_params = {'ref': self.assembly_ref_1, 'start': 2, 'limit': 2}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 15)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 2)
+        self.assertEquals(len(ret['contigs']), 2)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'NZ_ALQT01000014')
+        self.assertEquals(ret['contigs'][1]['contig_id'], 'NZ_ALQT01000015')
+
+        # sort by gc
+        search_params = {'ref': self.assembly_ref_1, 'limit': 5, 'sort_by': [['gc', 0]]}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 15)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 5)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'NZ_ALQT01000010')
+        self.assertEquals(ret['contigs'][1]['contig_id'], 'NZ_ALQT01000004')
+
+        search_params = {'ref': self.assembly_ref_1, 'sort_by': [['gc', 1]]}
+        ret = self.getImpl().search_contigs(self.getContext(), search_params)[0]
+        self.assertEquals(ret['num_found'], 15)
+        self.assertEquals(ret['query'], '')
+        self.assertEquals(ret['start'], 0)
+        self.assertEquals(len(ret['contigs']), 15)
+        self.assertEquals(ret['contigs'][0]['contig_id'], 'NZ_ALQT01000009')
+        self.assertEquals(ret['contigs'][1]['contig_id'], 'NZ_ALQT01000003')
+        self.assertEquals(ret['contigs'][2]['contig_id'], 'NZ_ALQT01000005')
+
+
 
     def test_get_assembly_id(self):
         ret = self.getImpl().get_assembly_id(self.getContext(), self.obj_name)

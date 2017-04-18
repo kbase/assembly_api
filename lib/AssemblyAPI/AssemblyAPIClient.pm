@@ -81,20 +81,19 @@ sub new
     # We create an auth token, passing through the arguments that we were (hopefully) given.
 
     {
-	my $token = Bio::KBase::AuthToken->new(@args);
-	
-	if (!$token->error_message)
-	{
-	    $self->{token} = $token->token;
-	    $self->{client}->{token} = $token->token;
+	my %arg_hash2 = @args;
+	if (exists $arg_hash2{"token"}) {
+	    $self->{token} = $arg_hash2{"token"};
+	} elsif (exists $arg_hash2{"user_id"}) {
+	    my $token = Bio::KBase::AuthToken->new(@args);
+	    if (!$token->error_message) {
+	        $self->{token} = $token->token;
+	    }
 	}
-        else
-        {
-	    #
-	    # All methods in this module require authentication. In this case, if we
-	    # don't have a token, we can't continue.
-	    #
-	    die "Authentication failed: " . $token->error_message;
+	
+	if (exists $self->{token})
+	{
+	    $self->{client}->{token} = $self->{token};
 	}
     }
 
@@ -107,6 +106,136 @@ sub new
 }
 
 
+
+
+=head2 search_contigs
+
+  $result = $obj->search_contigs($params)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$params is an AssemblyAPI.SearchAssemblyOptions
+$result is an AssemblyAPI.SearchAssemblyResult
+SearchAssemblyOptions is a reference to a hash where the following keys are defined:
+	ref has a value which is a string
+	query has a value which is a string
+	sort_by has a value which is a reference to a list where each element is an AssemblyAPI.column_sorting
+	start has a value which is an int
+	limit has a value which is an int
+	num_found has a value which is an int
+column_sorting is a reference to a list containing 2 items:
+	0: (column) a string
+	1: (ascending) an AssemblyAPI.boolean
+boolean is an int
+SearchAssemblyResult is a reference to a hash where the following keys are defined:
+	query has a value which is a string
+	start has a value which is an int
+	contigs has a value which is a reference to a list where each element is an AssemblyAPI.AssemblyData
+	num_found has a value which is an int
+AssemblyData is a reference to a hash where the following keys are defined:
+	contig_id has a value which is a string
+	description has a value which is a string
+	length has a value which is an int
+	gc has a value which is an int
+	is_circ has a value which is an int
+	N_count has a value which is an int
+	md5 has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$params is an AssemblyAPI.SearchAssemblyOptions
+$result is an AssemblyAPI.SearchAssemblyResult
+SearchAssemblyOptions is a reference to a hash where the following keys are defined:
+	ref has a value which is a string
+	query has a value which is a string
+	sort_by has a value which is a reference to a list where each element is an AssemblyAPI.column_sorting
+	start has a value which is an int
+	limit has a value which is an int
+	num_found has a value which is an int
+column_sorting is a reference to a list containing 2 items:
+	0: (column) a string
+	1: (ascending) an AssemblyAPI.boolean
+boolean is an int
+SearchAssemblyResult is a reference to a hash where the following keys are defined:
+	query has a value which is a string
+	start has a value which is an int
+	contigs has a value which is a reference to a list where each element is an AssemblyAPI.AssemblyData
+	num_found has a value which is an int
+AssemblyData is a reference to a hash where the following keys are defined:
+	contig_id has a value which is a string
+	description has a value which is a string
+	length has a value which is an int
+	gc has a value which is an int
+	is_circ has a value which is an int
+	N_count has a value which is an int
+	md5 has a value which is a string
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+ sub search_contigs
+{
+    my($self, @args) = @_;
+
+# Authentication: optional
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function search_contigs (received $n, expecting 1)");
+    }
+    {
+	my($params) = @args;
+
+	my @_bad_arguments;
+        (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"params\" (value was \"$params\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to search_contigs:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'search_contigs');
+	}
+    }
+
+    my $url = $self->{url};
+    my $result = $self->{client}->call($url, $self->{headers}, {
+	    method => "AssemblyAPI.search_contigs",
+	    params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'search_contigs',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method search_contigs",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'search_contigs',
+				       );
+    }
+}
+ 
 
 
 =head2 get_assembly_id
@@ -1109,6 +1238,36 @@ Retrieve all the data for the contigs in this Assembly.
 }
  
   
+sub status
+{
+    my($self, @args) = @_;
+    if ((my $n = @args) != 0) {
+        Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+                                   "Invalid argument count for function status (received $n, expecting 0)");
+    }
+    my $url = $self->{url};
+    my $result = $self->{client}->call($url, $self->{headers}, {
+        method => "AssemblyAPI.status",
+        params => \@args,
+    });
+    if ($result) {
+        if ($result->is_error) {
+            Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+                           code => $result->content->{error}->{code},
+                           method_name => 'status',
+                           data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+                          );
+        } else {
+            return wantarray ? @{$result->result} : $result->result->[0];
+        }
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method status",
+                        status_line => $self->{client}->status_line,
+                        method_name => 'status',
+                       );
+    }
+}
+   
 
 sub version {
     my ($self) = @_;
@@ -1164,6 +1323,215 @@ sub _validate_version {
 }
 
 =head1 TYPES
+
+
+
+=head2 boolean
+
+=over 4
+
+
+
+=item Description
+
+Indicates true or false values, false = 0, true = 1
+@range [0,1]
+
+
+=item Definition
+
+=begin html
+
+<pre>
+an int
+</pre>
+
+=end html
+
+=begin text
+
+an int
+
+=end text
+
+=back
+
+
+
+=head2 column_sorting
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a list containing 2 items:
+0: (column) a string
+1: (ascending) an AssemblyAPI.boolean
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a list containing 2 items:
+0: (column) a string
+1: (ascending) an AssemblyAPI.boolean
+
+
+=end text
+
+=back
+
+
+
+=head2 SearchAssemblyOptions
+
+=over 4
+
+
+
+=item Description
+
+num_found - optional field which when set informs that there
+    is no need to perform full scan in order to count this
+    value because it was already done before; please don't
+    set this value with 0 or any guessed number if you didn't 
+    get right value previously.
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+ref has a value which is a string
+query has a value which is a string
+sort_by has a value which is a reference to a list where each element is an AssemblyAPI.column_sorting
+start has a value which is an int
+limit has a value which is an int
+num_found has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+ref has a value which is a string
+query has a value which is a string
+sort_by has a value which is a reference to a list where each element is an AssemblyAPI.column_sorting
+start has a value which is an int
+limit has a value which is an int
+num_found has a value which is an int
+
+
+=end text
+
+=back
+
+
+
+=head2 AssemblyData
+
+=over 4
+
+
+
+=item Description
+
+contig_id - id of the contig
+description - description of the contig (description on fasta header rows)
+length - (bp) length of the contig
+gc - gc_content of the contig
+is_circ - 0 or 1 value indicating if the contig is circular.  May be null
+          if unknown
+N_count - number of 'N' bases in the contig
+md5 - md5 checksum of the sequence
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+contig_id has a value which is a string
+description has a value which is a string
+length has a value which is an int
+gc has a value which is an int
+is_circ has a value which is an int
+N_count has a value which is an int
+md5 has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+contig_id has a value which is a string
+description has a value which is a string
+length has a value which is an int
+gc has a value which is an int
+is_circ has a value which is an int
+N_count has a value which is an int
+md5 has a value which is a string
+
+
+=end text
+
+=back
+
+
+
+=head2 SearchAssemblyResult
+
+=over 4
+
+
+
+=item Description
+
+num_found - number of all items found in query search (with 
+    only part of it returned in "bins" list).
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+query has a value which is a string
+start has a value which is an int
+contigs has a value which is a reference to a list where each element is an AssemblyAPI.AssemblyData
+num_found has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+query has a value which is a string
+start has a value which is an int
+contigs has a value which is a reference to a list where each element is an AssemblyAPI.AssemblyData
+num_found has a value which is an int
+
+
+=end text
+
+=back
 
 
 
