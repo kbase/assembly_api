@@ -194,7 +194,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<String>> retType = new TypeReference<List<String>>() {};
-        List<String> res = caller.jsonrpcCall("AssemblyAPI.get_assembly_id", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<String> res = caller.jsonrpcCall("AssemblyAPI.get_assembly_id", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -216,7 +216,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<List<String>>> retType = new TypeReference<List<List<String>>>() {};
-        List<List<String>> res = caller.jsonrpcCall("AssemblyAPI.get_genome_annotations", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<List<String>> res = caller.jsonrpcCall("AssemblyAPI.get_genome_annotations", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -237,7 +237,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<AssemblyExternalSourceInfo>> retType = new TypeReference<List<AssemblyExternalSourceInfo>>() {};
-        List<AssemblyExternalSourceInfo> res = caller.jsonrpcCall("AssemblyAPI.get_external_source_info", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<AssemblyExternalSourceInfo> res = caller.jsonrpcCall("AssemblyAPI.get_external_source_info", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -257,7 +257,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<AssemblyStats>> retType = new TypeReference<List<AssemblyStats>>() {};
-        List<AssemblyStats> res = caller.jsonrpcCall("AssemblyAPI.get_stats", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<AssemblyStats> res = caller.jsonrpcCall("AssemblyAPI.get_stats", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -278,7 +278,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<Long>> retType = new TypeReference<List<Long>>() {};
-        List<Long> res = caller.jsonrpcCall("AssemblyAPI.get_number_contigs", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<Long> res = caller.jsonrpcCall("AssemblyAPI.get_number_contigs", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -299,7 +299,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<Double>> retType = new TypeReference<List<Double>>() {};
-        List<Double> res = caller.jsonrpcCall("AssemblyAPI.get_gc_content", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<Double> res = caller.jsonrpcCall("AssemblyAPI.get_gc_content", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -320,7 +320,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<Long>> retType = new TypeReference<List<Long>>() {};
-        List<Long> res = caller.jsonrpcCall("AssemblyAPI.get_dna_size", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<Long> res = caller.jsonrpcCall("AssemblyAPI.get_dna_size", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -341,7 +341,7 @@ public class AssemblyAPIClient {
         List<Object> args = new ArrayList<Object>();
         args.add(ref);
         TypeReference<List<List<String>>> retType = new TypeReference<List<List<String>>>() {};
-        List<List<String>> res = caller.jsonrpcCall("AssemblyAPI.get_contig_ids", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<List<String>> res = caller.jsonrpcCall("AssemblyAPI.get_contig_ids", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -364,7 +364,7 @@ public class AssemblyAPIClient {
         args.add(ref);
         args.add(contigIdList);
         TypeReference<List<Map<String,Long>>> retType = new TypeReference<List<Map<String,Long>>>() {};
-        List<Map<String,Long>> res = caller.jsonrpcCall("AssemblyAPI.get_contig_lengths", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<Map<String,Long>> res = caller.jsonrpcCall("AssemblyAPI.get_contig_lengths", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -387,7 +387,7 @@ public class AssemblyAPIClient {
         args.add(ref);
         args.add(contigIdList);
         TypeReference<List<Map<String,Double>>> retType = new TypeReference<List<Map<String,Double>>>() {};
-        List<Map<String,Double>> res = caller.jsonrpcCall("AssemblyAPI.get_contig_gc_content", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<Map<String,Double>> res = caller.jsonrpcCall("AssemblyAPI.get_contig_gc_content", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
@@ -410,7 +410,7 @@ public class AssemblyAPIClient {
         args.add(ref);
         args.add(contigIdList);
         TypeReference<List<Map<String,AssemblyContig>>> retType = new TypeReference<List<Map<String,AssemblyContig>>>() {};
-        List<Map<String,AssemblyContig>> res = caller.jsonrpcCall("AssemblyAPI.get_contigs", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<Map<String,AssemblyContig>> res = caller.jsonrpcCall("AssemblyAPI.get_contigs", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
