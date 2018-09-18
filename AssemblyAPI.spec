@@ -126,7 +126,7 @@ typedef structure {
     /**
      * Retrieve Assembly ID.
      */
-     funcdef get_assembly_id( ObjectReference ref)  returns (string) authentication required;
+     funcdef get_assembly_id( ObjectReference ref)  returns (string) authentication optional;
 
     /**
      * Retrieve associated GenomeAnnotation objects.
@@ -134,48 +134,48 @@ typedef structure {
      * @return List of GenomeAnnotation object references
      *
      */
-     funcdef get_genome_annotations( ObjectReference ref)  returns (list<ObjectReference>) authentication required;
+     funcdef get_genome_annotations( ObjectReference ref)  returns (list<ObjectReference>) authentication optional;
 
     /**
      * Retrieve the external source information for this Assembly.
      *
      * @return Metadata about the external source
      */
-     funcdef get_external_source_info( ObjectReference ref)  returns (AssemblyExternalSourceInfo) authentication required;
+     funcdef get_external_source_info( ObjectReference ref)  returns (AssemblyExternalSourceInfo) authentication optional;
 
     /**
      * Retrieve the derived statistical information about this Assembly.
      *
      */
-     funcdef get_stats( ObjectReference ref)  returns (AssemblyStats) authentication required;
+     funcdef get_stats( ObjectReference ref)  returns (AssemblyStats) authentication optional;
 
     /**
      * Retrieve the number of contigs for this Assembly.
      *
      * @return Total number of contiguous sequences.
      */
-     funcdef get_number_contigs( ObjectReference ref)  returns (int) authentication required;
+     funcdef get_number_contigs( ObjectReference ref)  returns (int) authentication optional;
 
     /**
      * Retrieve the total GC content for this Assembly.
      *
      * @return Proportion of GC content, between 0 and 1.
      */
-     funcdef get_gc_content( ObjectReference ref)  returns (double) authentication required;
+     funcdef get_gc_content( ObjectReference ref)  returns (double) authentication optional;
 
     /**
      * Retrieve the total DNA size for this Assembly.
      *
      * @return Total DNA size
      */
-     funcdef get_dna_size( ObjectReference ref)  returns (int) authentication required;
+     funcdef get_dna_size( ObjectReference ref)  returns (int) authentication optional;
 
     /**
      * Retrieve the contig identifiers for this Assembly.
      *
      * @return List of contig IDs.
      */
-     funcdef get_contig_ids( ObjectReference ref)  returns (list<string>) authentication required;
+     funcdef get_contig_ids( ObjectReference ref)  returns (list<string>) authentication optional;
 
     /**
      * Retrieve the lengths of the contigs in this Assembly.
@@ -183,7 +183,7 @@ typedef structure {
      * @return Mapping of contig ID to contig length.
      */
      funcdef get_contig_lengths( ObjectReference ref,
-                    list<string> contig_id_list)  returns (mapping<string, int>) authentication required;
+                    list<string> contig_id_list)  returns (mapping<string, int>) authentication optional;
 
     /**
      * Retrieve the gc content for contigs in this Assembly.
@@ -191,7 +191,7 @@ typedef structure {
      * @return Mapping of contig IDs to GC content proportion.
      */
      funcdef get_contig_gc_content( ObjectReference ref,
-                          list<string> contig_id_list)  returns (mapping<string, double>) authentication required;
+                          list<string> contig_id_list)  returns (mapping<string, double>) authentication optional;
 
     /**
      * Retrieve all the data for the contigs in this Assembly.
@@ -199,5 +199,5 @@ typedef structure {
      * @return Mapping of contig ID to details for that contig.
      */
      funcdef get_contigs( ObjectReference ref,
-                        list<string> contig_id_list)  returns (mapping<string, AssemblyContig>) authentication required;
+                        list<string> contig_id_list)  returns (mapping<string, AssemblyContig>) authentication optional;
 };
