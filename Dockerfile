@@ -9,6 +9,7 @@ MAINTAINER KBase Developer
 # RUN pip install pyasn1 --upgrade
 # RUN pip install requests --upgrade && \
 #     pip install 'requests[security]' --upgrade
+RUN pip install --upgrade 'requests[security]'
 
 RUN mkdir -p /kb/module && \
     cd /kb/module && \
