@@ -278,7 +278,7 @@ Retrieve Assembly ID.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -364,7 +364,7 @@ Retrieve associated GenomeAnnotation objects.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -458,7 +458,7 @@ Retrieve the external source information for this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -554,7 +554,7 @@ Retrieve the derived statistical information about this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -640,7 +640,7 @@ Retrieve the number of contigs for this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -728,7 +728,7 @@ Retrieve the total GC content for this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -814,7 +814,7 @@ Retrieve the total DNA size for this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -900,7 +900,7 @@ Retrieve the contig identifiers for this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 1)
     {
@@ -988,7 +988,7 @@ Retrieve the lengths of the contigs in this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 2)
     {
@@ -1079,7 +1079,7 @@ Retrieve the gc content for contigs in this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 2)
     {
@@ -1194,7 +1194,7 @@ Retrieve all the data for the contigs in this Assembly.
 {
     my($self, @args) = @_;
 
-# Authentication: required
+# Authentication: optional
 
     if ((my $n = @args) != 2)
     {

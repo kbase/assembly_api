@@ -23,9 +23,9 @@ class AssemblyAPI:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.2"
-    GIT_URL = "git@github.com:kbase/assembly_api"
-    GIT_COMMIT_HASH = "b747cfa0275d6e4b12332ffc59c24ae070632b69"
+    VERSION = "0.1.0"
+    GIT_URL = ""
+    GIT_COMMIT_HASH = "82897279c6b03e15a6574bffb5cf9d990e404381"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None

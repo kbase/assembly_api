@@ -340,47 +340,47 @@ class Application(object):
         self.rpc_service.add(impl_AssemblyAPI.get_assembly_id,
                              name='AssemblyAPI.get_assembly_id',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_assembly_id'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_assembly_id'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_genome_annotations,
                              name='AssemblyAPI.get_genome_annotations',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_genome_annotations'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_genome_annotations'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_external_source_info,
                              name='AssemblyAPI.get_external_source_info',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_external_source_info'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_external_source_info'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_stats,
                              name='AssemblyAPI.get_stats',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_stats'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_stats'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_number_contigs,
                              name='AssemblyAPI.get_number_contigs',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_number_contigs'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_number_contigs'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_gc_content,
                              name='AssemblyAPI.get_gc_content',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_gc_content'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_gc_content'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_dna_size,
                              name='AssemblyAPI.get_dna_size',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_dna_size'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_dna_size'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_contig_ids,
                              name='AssemblyAPI.get_contig_ids',
                              types=[basestring])
-        self.method_authentication['AssemblyAPI.get_contig_ids'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_contig_ids'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_contig_lengths,
                              name='AssemblyAPI.get_contig_lengths',
                              types=[basestring, list])
-        self.method_authentication['AssemblyAPI.get_contig_lengths'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_contig_lengths'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_contig_gc_content,
                              name='AssemblyAPI.get_contig_gc_content',
                              types=[basestring, list])
-        self.method_authentication['AssemblyAPI.get_contig_gc_content'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_contig_gc_content'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.get_contigs,
                              name='AssemblyAPI.get_contigs',
                              types=[basestring, list])
-        self.method_authentication['AssemblyAPI.get_contigs'] = 'required'  # noqa
+        self.method_authentication['AssemblyAPI.get_contigs'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.status,
                              name='AssemblyAPI.status',
                              types=[dict])
