@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
-import doekbase.data_api.sequence.assembly.api
-from doekbase.data_api import cache
 import logging
 
 from AssemblyAPI.AssemblyIndexer import AssemblyIndexer
+from AssemblyAPI import Utils
 #END_HEADER
 
 
@@ -43,35 +42,11 @@ class AssemblyAPI:
         log_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
         self.logger.addHandler(log_handler)
 
-
         self.services = {
                 "workspace_service_url": self.workspaceURL,
                 "shock_service_url": self.shockURL,
                 "handle_service_url": self.handleURL,
             }
-        try:
-            cache_dir = config['cache_dir']
-        except:
-            cache_dir = None
-        try:
-            redis_host = config['redis_host']
-            redis_port = config['redis_port']
-        except:
-            redis_host = None
-            redis_port = None
-        if redis_host is not None and redis_port is not None:
-            self.logger.info("Activating REDIS at host:{} port:{}".format(redis_host, redis_port))
-            cache.ObjectCache.cache_class = cache.RedisCache
-            cache.ObjectCache.cache_params = {'redis_host': redis_host, 'redis_port': redis_port}
-        elif cache_dir is not None:
-            self.logger.info("Activating File")
-            cache.ObjectCache.cache_class = cache.DBMCache
-            cache.ObjectCache.cache_params = {'path':cache_dir,'name':'data_api'}
-        else:
-            self.logger.info("Not activating REDIS")
-
-
-
         self.indexer = AssemblyIndexer(config)
 
         #END_CONSTRUCTOR
@@ -135,8 +110,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_assembly_id
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_assembly_id()
+        returnVal=Utils.get_assembly_id(self.workspaceURL, ref)
         #END get_assembly_id
 
         # At some point might do deeper type checking...
@@ -158,8 +132,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_genome_annotations
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_genome_annotations(ref_only=True)
+        returnVal=Utils.get_genome_annotations(self.workspaceURL, ref)
         #END get_genome_annotations
 
         # At some point might do deeper type checking...
@@ -184,8 +157,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_external_source_info
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_external_source_info()
+        returnVal=Utils.get_external_source_info(self.workspaceURL, ref)
         #END get_external_source_info
 
         # At some point might do deeper type checking...
@@ -208,8 +180,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_stats
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_stats()
+        returnVal=Utils.get_stats(self.workspaceURL, ref)
         #END get_stats
 
         # At some point might do deeper type checking...
@@ -230,8 +201,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_number_contigs
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_number_contigs()
+        returnVal=Utils.get_number_contigs(self.workspaceURL, ref)
         #END get_number_contigs
 
         # At some point might do deeper type checking...
@@ -252,8 +222,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_gc_content
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_gc_content()
+        returnVal=Utils.get_gc_content(self.workspaceURL, ref)
         #END get_gc_content
 
         # At some point might do deeper type checking...
@@ -274,8 +243,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_dna_size
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_dna_size()
+        returnVal=Utils.get_dna_size(self.workspaceURL, ref)
         #END get_dna_size
 
         # At some point might do deeper type checking...
@@ -296,8 +264,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contig_ids
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_contig_ids()
+        returnVal=Utils.get_contig_ids(self.workspaceURL, ref)
         #END get_contig_ids
 
         # At some point might do deeper type checking...
@@ -319,8 +286,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contig_lengths
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_contig_lengths(contig_id_list)
+        returnVal=Utils.get_contig_lengths(self.workspaceURL, ref, contig_id_list)
         #END get_contig_lengths
 
         # At some point might do deeper type checking...
@@ -342,8 +308,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contig_gc_content
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_contig_gc_content(contig_id_list)
+        returnVal=Utils.get_contig_gc_content(self.workspaceURL, ref, contig_id_list)
         #END get_contig_gc_content
 
         # At some point might do deeper type checking...
@@ -371,8 +336,7 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contigs
-        assembly_api = doekbase.data_api.sequence.assembly.api.AssemblyAPI(self.services, ctx['token'], ref)
-        returnVal=assembly_api.get_contigs(contig_id_list)
+        returnVal=Utils.get_contigs(self.workspaceURL, ref, contig_id_list)
         #END get_contigs
 
         # At some point might do deeper type checking...
