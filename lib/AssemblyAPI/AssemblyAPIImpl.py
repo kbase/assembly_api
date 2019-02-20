@@ -22,9 +22,9 @@ class AssemblyAPI:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.1.0"
-    GIT_URL = ""
-    GIT_COMMIT_HASH = "82897279c6b03e15a6574bffb5cf9d990e404381"
+    VERSION = "0.2.0"
+    GIT_URL = "https://github.com/kbase/assembly_api.git"
+    GIT_COMMIT_HASH = "eaea33e976217b23cff2e3cec2a967f9c4886ed2"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -114,9 +114,9 @@ class AssemblyAPI:
         #END get_assembly_id
 
         # At some point might do deeper type checking...
-        if not isinstance(returnVal, basestring):
+        if not isinstance(returnVal, str):
             raise ValueError('Method get_assembly_id return value ' +
-                             'returnVal is not type basestring as required.')
+                             'returnVal is not type str as required.')
         # return the results
         return [returnVal]
 
