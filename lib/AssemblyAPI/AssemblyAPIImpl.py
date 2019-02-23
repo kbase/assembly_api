@@ -202,6 +202,7 @@ class AssemblyAPI:
         # return variables are: returnVal
         #BEGIN get_number_contigs
         returnVal=Utils.get_number_contigs(self.workspaceURL, ref)
+        print(returnVal)
         #END get_number_contigs
 
         # At some point might do deeper type checking...
