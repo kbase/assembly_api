@@ -200,4 +200,14 @@ typedef structure {
      */
      funcdef get_contigs( ObjectReference ref,
                         list<string> contig_id_list)  returns (mapping<string, AssemblyContig>) authentication optional;
+    /**
+     * Extract one or more DNA sequences that match locations (as tuples of 'contig', 'start', 'strand', 'length') on the supplied contigs
+     */
+     typedef structure {
+        ObjectReference ref;
+        list<tuple<string,int,string,int>> locations;
+     } GetDNASequenceParams;
+
+     funcdef get_dna_sequence(GetDNASequenceParams params)  returns (list<string> sequences) authentication optional;
+
 };

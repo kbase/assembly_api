@@ -287,3 +287,31 @@ class AssemblyAPITest(unittest.TestCase):
         self.assertCountEqual(ret[0][u'NC_004349'],
                               ['gc_content', 'length', 'contig_id', 'md5', 'name', 'description'])
 
+    def test_get_dna_sequence_contig_set(self):
+        ret = self.getImpl().get_dna_sequence(self.ctx, {'ref': self.contig_set_ref_2, 'locations':
+                                              [[['NC_004347', 10, "+", 5], ['NC_004347', 10, "+", 5]],
+                                               [['NC_004347', 50, "-", 10]]]})[0]
+        self.assertEqual(ret, ['CTTAACTTAA', 'AATAGTAAAA'])
+
+    def test_get_dna_sequence_assembly(self):
+        ret = self.getImpl().get_dna_sequence(self.ctx, {'ref': self.assembly_ref_1, 'locations':
+                                              [[['NZ_ALQT01000001', 10, "+", 5], ['NZ_ALQT01000001', 10, "+", 5]],
+                                               [['NZ_ALQT01000001', 50, "-", 10]]]})[0]
+        self.assertEqual(ret, ['ACGATACGAT', 'TCCGATGTTT'])
+
+    def test_get_dna_sequence_bad_params(self):
+        with self.assertRaisesRegex(ValueError, 'reference to an assembly must be provided'):
+            ret = self.getImpl().get_dna_sequence(self.ctx,
+                                                  {'locations': [[['NC_004347', 5, "-", 10]]]})
+        with self.assertRaisesRegex(ValueError, 'not a valid location'):
+            ret = self.getImpl().get_dna_sequence(self.ctx,
+                                                  {'ref': self.contig_set_ref_2,
+                                                   'locations': [[['NC_004347', 5, "-", 10]]]})
+        with self.assertRaisesRegex(ValueError, 'not a valid location'):
+            ret = self.getImpl().get_dna_sequence(self.ctx,
+                                                  {'ref': self.contig_set_ref_2,
+                                                   'locations': [[['NC_004347', 50000000000000000, "+", 10]]]})
+        with self.assertRaisesRegex(ValueError, 'not found in the cached assembly'):
+            ret = self.getImpl().get_dna_sequence(self.ctx,
+                                                  {'ref': self.contig_set_ref_2,
+                                                   'locations': [[['foo', 5, "-", 10]]]})
