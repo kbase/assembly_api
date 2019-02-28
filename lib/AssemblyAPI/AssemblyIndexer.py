@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
-import base64
-import time
 import subprocess
-import traceback
-import string
 import tempfile
+import time
+import traceback
 
-from Workspace.WorkspaceClient import Workspace as Workspace
 from AssemblyAPI.CombinedLineIterator import CombinedLineIterator
+from installed_clients.WorkspaceClient import Workspace as Workspace
+
 
 class AssemblyIndexer:
 
@@ -30,7 +29,7 @@ class AssemblyIndexer:
             os.makedirs(self.assembly_index_dir)
         self.debug = "debug" in config and config["debug"] == "1"
         self.max_sort_mem_size = 250000
-        self.unicode_comma = u"\uFF0C"
+        self.unicode_comma = "\uFF0C"
 
     def search_contigs(self, token, ref, query, sort_by, start, limit, num_found):
         if query is None:
@@ -40,15 +39,15 @@ class AssemblyIndexer:
         if limit is None:
             limit = 50
         if self.debug:
-            print("Search: Assembly=" + ref + ", query=[" + query + "], sort-by=[" +
-                  self.get_sorting_code(self.assembly_column_props_map, sort_by) +
-                  "], start=" + str(start) + ", limit=" + str(limit))
+            print(f"Search: Assembly={ref}, query=[{query}], "
+                  f"sort-by=[{self.get_sorting_code(self.assembly_column_props_map, sort_by)}],"
+                  f" start={start}, limit={limit}")
             t1 = time.time()
         inner_chsum = self.check_assembly_cache(ref, token)
         index_iter = self.get_assembly_sorted_iterator(inner_chsum, sort_by)
         ret = self.filter_contigs_query(index_iter, query, start, limit, num_found)
         if self.debug:
-            print("    (overall-time=" + str(time.time() - t1) + ")")
+            print(f"    (overall-time={time.time() - t1})")
         return ret
 
     def to_text(self, mapping, key):
@@ -82,7 +81,8 @@ class AssemblyIndexer:
                     N_count = str(contig_data['Ncount'])
                 md5 = self.to_text(contig_data, 'md5')
 
-                line = u"\t".join(x for x in [contig_id, description, length, gc, is_circ, N_count, md5]) + u"\n"
+                line = "\t".join(x for x in [contig_id, description, length, gc, is_circ, N_count,
+                                             md5]) + "\n"
                 outfile.write(line.encode("utf-8"))
 
         subprocess.Popen(["gzip", outfile.name],
@@ -102,7 +102,8 @@ class AssemblyIndexer:
 
             if 'KBaseGenomeAnnotations.Assembly' in info[2]:
                 included = ["/contigs"]
-                assembly_data = ws.get_objects2({'objects': [{'ref': ref, 'included': included}]})['data'][0]['data']
+                assembly_data = ws.get_objects2(
+                    {'objects': [{'ref': ref, 'included': included}]})['data'][0]['data']
                 contigs = list(assembly_data['contigs'].values())
                 self.save_assembly_tsv(contigs, inner_chsum)
 
@@ -111,7 +112,8 @@ class AssemblyIndexer:
                             "/contigs/[*]/length",
                             "/contigs/[*]/md5",
                             "/contigs/[*]/description"]
-                cs_data = ws.get_objects2({'objects': [{'ref': ref, 'included': included}]})['data'][0]['data']
+                cs_data = ws.get_objects2(
+                    {'objects': [{'ref': ref, 'included': included}]})['data'][0]['data']
                 contigs = []
                 for c in cs_data['contigs']:
                     this_contig_data = {'contig_id': ''}
@@ -127,16 +129,17 @@ class AssemblyIndexer:
 
                 self.save_assembly_tsv(contigs, inner_chsum)
             else:
-                raise ValueError('The "ref" is not an Assembly or ContigSet data object.  It was a ' + info[2])
+                raise ValueError('The "ref" is not an Assembly or ContigSet data object. '
+                                 'It was a ' + info[2])
 
             if self.debug:
-                print("    (time=" + str(time.time() - t1) + ")")
+                print(f"    (time={time.time() - t1})")
         return inner_chsum
 
     def get_column_props(self, column_props_map, col_name):
         if col_name not in column_props_map:
             raise ValueError("Unknown column name '" + col_name + "', " +
-                             "please use one of " + str(column_props_map.keys()))
+                             "please use one of " + str(list(column_props_map.keys())))
         return column_props_map[col_name]
 
     def get_sorting_code(self, column_props_map, sort_by):
@@ -189,17 +192,17 @@ class AssemblyIndexer:
                                  stderr=subprocess.PIPE)
             if not need_to_save:
                 if self.debug:
-                    print("    (time=" + str(time.time() - t1) + ")")
+                    print(f"    (time={time.time() - t1})")
                 return CombinedLineIterator(p)
             else:
                 p.wait()
                 os.rename(output_file, final_output_file)
                 if self.debug:
-                    print("    (time=" + str(time.time() - t1) + ")")
+                    print(f"    (time={time.time() - t1})")
         return CombinedLineIterator(final_output_file)
 
     def filter_contigs_query(self, index_iter, query, start, limit, num_found):
-        query_words = str(query).lower().translate(string.maketrans("\r\n\t,", "    ")).split()
+        query_words = str(query).lower().translate(str.maketrans("\r\n\t,", "    ")).split()
         if self.debug:
             print("    Filtering...")
             t1 = time.time()
@@ -216,7 +219,7 @@ class AssemblyIndexer:
                         fcount = num_found
                         break
         if self.debug:
-                print("    (time=" + str(time.time() - t1) + ")")
+                print(f"    (time={time.time() - t1})")
         return {"num_found": fcount, "start": start, "contigs": contigs,
                 "query": query}
 
