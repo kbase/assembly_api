@@ -121,7 +121,7 @@ class AssemblySequenceCache:
             contigs = ((c['id'], c['sequence'].encode()) for c in contig_data)
 
         for cid, seq in contigs:
-            with gzip.open(os.path.join(assembly_dir, cid), 'wb') as outfile:
+            with gzip.open(os.path.join(assembly_dir, cid), 'wb', compresslevel=1) as outfile:
                 outfile.write(seq)
 
     def __init__(self, ws_url, shock_url, max_cached_objects=100, cache_dir="./assembly_cache"):
@@ -129,6 +129,7 @@ class AssemblySequenceCache:
         self.shock_url = shock_url
         self.max_cached_objects = max_cached_objects
         self.cache_dir = cache_dir
+        self.valid_types = {'KBaseGenomes.ContigSet', 'KBaseGenomeAnnotations.Assembly'}
 
     def extract_dna_sequences(self, token, params):
         """Takes an assembly/contig set ref and one or more locations and returns the DNA sequence
@@ -138,8 +139,10 @@ class AssemblySequenceCache:
         ref = params['ref']
         locs = params.get('locations', [])
         ws = Workspace(self.ws_url, token=token)
-        # This is a cheap way to ensure that the object exists and that the user has access
-        ws.get_object_info3({'objects': [{'ref': ref}]})
+        # This is also a cheap way to ensure that the object exists and that the user has access
+        obj_type = ws.get_object_info3({'objects': [{'ref': ref}]})['infos'][0][2]
+        if obj_type.split('-')[0] not in self.valid_types:
+            raise ValueError(f'{obj_type} is not a valid input type for this function')
         assembly_dir = os.path.join(self.cache_dir, ref.replace('/', ':'))
         if not os.path.exists(assembly_dir):
             self._cache_assembly(ws, token, ref, assembly_dir)

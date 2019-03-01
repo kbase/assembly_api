@@ -303,6 +303,10 @@ class AssemblyAPITest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'reference to an assembly must be provided'):
             ret = self.getImpl().get_dna_sequence(self.ctx,
                                                   {'locations': [[['NC_004347', 5, "-", 10]]]})
+        with self.assertRaisesRegex(ValueError, 'not a valid input type'):
+            ret = self.getImpl().get_dna_sequence(self.ctx,
+                                                  {'ref': 'kbase/plantdefault_obs',
+                                                   'locations': [[['NC_004347', 5, "-", 10]]]})
         with self.assertRaisesRegex(ValueError, 'not a valid location'):
             ret = self.getImpl().get_dna_sequence(self.ctx,
                                                   {'ref': self.contig_set_ref_2,
