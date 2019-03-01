@@ -386,6 +386,10 @@ class Application(object):
                              name='AssemblyAPI.get_contigs',
                              types=[str, list])
         self.method_authentication['AssemblyAPI.get_contigs'] = 'optional'  # noqa
+        self.rpc_service.add(impl_AssemblyAPI.get_dna_sequence,
+                             name='AssemblyAPI.get_dna_sequence',
+                             types=[dict])
+        self.method_authentication['AssemblyAPI.get_dna_sequence'] = 'optional'  # noqa
         self.rpc_service.add(impl_AssemblyAPI.status,
                              name='AssemblyAPI.status',
                              types=[dict])

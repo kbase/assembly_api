@@ -3,6 +3,7 @@
 import logging
 
 from AssemblyAPI.AssemblyIndexer import AssemblyIndexer
+from AssemblyAPI.AssemblySequence import AssemblySequenceCache
 from AssemblyAPI import Utils
 #END_HEADER
 
@@ -24,7 +25,7 @@ class AssemblyAPI:
     ######################################### noqa
     VERSION = "0.2.0"
     GIT_URL = "https://github.com/kbase/assembly_api.git"
-    GIT_COMMIT_HASH = "eaea33e976217b23cff2e3cec2a967f9c4886ed2"
+    GIT_COMMIT_HASH = "500a3a58b98a1b60e2f8639c724cf7021400ebc2"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -48,6 +49,7 @@ class AssemblyAPI:
                 "handle_service_url": self.handleURL,
             }
         self.indexer = AssemblyIndexer(config)
+        self.seq_cache = AssemblySequenceCache(self.workspaceURL, self.shockURL)
 
         #END_CONSTRUCTOR
         pass
@@ -345,6 +347,29 @@ class AssemblyAPI:
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
+
+    def get_dna_sequence(self, ctx, params):
+        """
+        :param params: instance of type "GetDNASequenceParams" (* * Extract
+           one or more DNA sequences that match locations (as tuples of
+           'contig', 'start', 'strand', 'length') on the supplied contigs) ->
+           structure: parameter "ref" of type "ObjectReference" (Insert your
+           typespec information here.), parameter "locations" of list of
+           tuple of size 4: String, Long, String, Long
+        :returns: instance of list of String
+        """
+        # ctx is the context object
+        # return variables are: sequences
+        #BEGIN get_dna_sequence
+        sequences = self.seq_cache.extract_dna_sequences(ctx.get('token'), params)
+        #END get_dna_sequence
+
+        # At some point might do deeper type checking...
+        if not isinstance(sequences, list):
+            raise ValueError('Method get_dna_sequence return value ' +
+                             'sequences is not type list as required.')
+        # return the results
+        return [sequences]
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK", 'message': "", 'version': self.VERSION, 
