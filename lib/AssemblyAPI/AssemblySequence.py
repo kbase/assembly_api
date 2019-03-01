@@ -25,11 +25,11 @@ def _get_start(loc):
     return 0
 
 
-def _extract_sequence(assembly_dir, locations):
+def _extract_sequence(assembly_dir, feature_locs):
     """Given a cached assembly directory extract a sequence for each of the supplied locations"""
     contig = None
     fragments = []
-    for loc_tup in locations:
+    for loc_tup in feature_locs:
         loc = Location(*loc_tup)
         if not contig or loc.contig != os.path.basename(contig.name):
             try:
