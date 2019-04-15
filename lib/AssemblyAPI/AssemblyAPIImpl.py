@@ -5,6 +5,8 @@ import logging
 from AssemblyAPI.AssemblyIndexer import AssemblyIndexer
 from AssemblyAPI.AssemblySequence import AssemblySequenceCache
 from AssemblyAPI import Utils
+from installed_clients.WorkspaceClient import Workspace
+
 #END_HEADER
 
 
@@ -112,7 +114,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_assembly_id
-        returnVal=Utils.get_assembly_id(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_assembly_id(ws, ref)
         #END get_assembly_id
 
         # At some point might do deeper type checking...
@@ -134,7 +137,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_genome_annotations
-        returnVal=Utils.get_genome_annotations(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_genome_annotations(ws, ref)
         #END get_genome_annotations
 
         # At some point might do deeper type checking...
@@ -159,7 +163,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_external_source_info
-        returnVal=Utils.get_external_source_info(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_external_source_info(ws, ref)
         #END get_external_source_info
 
         # At some point might do deeper type checking...
@@ -182,7 +187,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_stats
-        returnVal=Utils.get_stats(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_stats(ws, ref)
         #END get_stats
 
         # At some point might do deeper type checking...
@@ -203,7 +209,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_number_contigs
-        returnVal=Utils.get_number_contigs(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_number_contigs(ws, ref)
         #END get_number_contigs
 
         # At some point might do deeper type checking...
@@ -224,7 +231,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_gc_content
-        returnVal=Utils.get_gc_content(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_gc_content(ws, ref)
         #END get_gc_content
 
         # At some point might do deeper type checking...
@@ -245,7 +253,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_dna_size
-        returnVal=Utils.get_dna_size(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_dna_size(ws, ref)
         #END get_dna_size
 
         # At some point might do deeper type checking...
@@ -266,7 +275,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contig_ids
-        returnVal=Utils.get_contig_ids(self.workspaceURL, ref)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_contig_ids(ws, ref)
         #END get_contig_ids
 
         # At some point might do deeper type checking...
@@ -288,7 +298,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contig_lengths
-        returnVal=Utils.get_contig_lengths(self.workspaceURL, ref, contig_id_list)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_contig_lengths(ws, ref, contig_id_list)
         #END get_contig_lengths
 
         # At some point might do deeper type checking...
@@ -310,7 +321,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contig_gc_content
-        returnVal=Utils.get_contig_gc_content(self.workspaceURL, ref, contig_id_list)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_contig_gc_content(ws, ref, contig_id_list)
         #END get_contig_gc_content
 
         # At some point might do deeper type checking...
@@ -338,7 +350,8 @@ class AssemblyAPI:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN get_contigs
-        returnVal=Utils.get_contigs(self.workspaceURL, ref, contig_id_list)
+        ws = Workspace(self.workspaceURL, token=ctx['token'])
+        returnVal=Utils.get_contigs(ws, ref, contig_id_list)
         #END get_contigs
 
         # At some point might do deeper type checking...
