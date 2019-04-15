@@ -55,12 +55,14 @@ def get_genome_annotations(ws, ref):
 
 def get_external_source_info(workspace_client, ref):
     included = ['external_source', 'external_source_id', 'external_source_origination_date']
-    return {k: _get_data_from_ws(workspace_client, ref, included)[k] for k in included}
+    data = _get_data_from_ws(workspace_client, ref, included)
+    return {k: data[k] for k in included}
 
 
 def get_stats(workspace_client, ref):
     included = ['num_contigs', 'gc_content', 'dna_size']
-    return {k: _get_data_from_ws(workspace_client, ref, included)[k] for k in included}
+    data = _get_data_from_ws(workspace_client, ref, included)
+    return {k: data[k] for k in included}
 
 
 def get_number_contigs(workspace_client, ref):

@@ -211,7 +211,6 @@ class AssemblyAPI:
         #BEGIN get_number_contigs
         ws = Workspace(self.workspaceURL, token=ctx['token'])
         returnVal=Utils.get_number_contigs(ws, ref)
-        print(returnVal)
         #END get_number_contigs
 
         # At some point might do deeper type checking...
