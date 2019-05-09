@@ -299,7 +299,7 @@ class AssemblyAPI:
         # return variables are: returnVal
         #BEGIN get_contig_lengths
         ws = Workspace(self.workspaceURL, token=ctx['token'])
-        returnVal=Utils.get_contig_lengths(ws, ref, contig_id_list)
+        returnVal=Utils.get_contig_lengths(ws, ref, contig_id_list or [])
         #END get_contig_lengths
 
         # At some point might do deeper type checking...
@@ -322,7 +322,7 @@ class AssemblyAPI:
         # return variables are: returnVal
         #BEGIN get_contig_gc_content
         ws = Workspace(self.workspaceURL, token=ctx['token'])
-        returnVal=Utils.get_contig_gc_content(ws, ref, contig_id_list)
+        returnVal=Utils.get_contig_gc_content(ws, ref, contig_id_list or [])
         #END get_contig_gc_content
 
         # At some point might do deeper type checking...

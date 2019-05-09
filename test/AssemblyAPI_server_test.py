@@ -242,6 +242,11 @@ class AssemblyAPITest(unittest.TestCase):
         ret = self.getImpl().get_contig_lengths(self.ctx, self.obj_ref, self.contigs)
         self.assertEqual(ret[0], {'NZ_ALQT01000016': 53554})
 
+    def test_get_contig_lengths_null_contigs(self):
+        """Test that it doesn't fail to pass None for the contig id list."""
+        ret = self.getImpl().get_contig_lengths(self.ctx, self.obj_ref, None)
+        self.assertEqual(ret[0], {})
+
     def test_get_contig_gc_content(self):
         ret = self.getImpl().get_contig_gc_content(self.ctx, self.obj_ref, self.contigs)
         self.assertEqual(ret[0], {'NZ_ALQT01000016': 0.35366172461440787})
